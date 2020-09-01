@@ -27,7 +27,7 @@ mkdir $DIR_DETECT
 mkdir $DIR_DETECT2
 
 # Compile
-chmod +x txl/*.x
+chmod +x txl/*.x extract parser tokenize detect
 
 pushd lexical
 make clean
