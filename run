@@ -5,7 +5,7 @@ DIR_PARSE=./_parse
 DIR_TOKEN=./token
 DIR_TOKENFILE=./tokenline_num
 DIR_DETECT=./_detect
-DIR_DETECT2=./_detect2
+DIR_OUTPUT=${2:-./}
 
 
 echo "-- CCAligner --"
@@ -42,4 +42,4 @@ popd
 
 ./detect $DIR_TOKEN $DIR_DETECT "${DIR_PARSE}/function.file" 6 1 0.6
 
-./co1 $DIR_DETECT ./
+./co1 $DIR_DETECT $DIR_OUTPUT
