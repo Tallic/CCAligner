@@ -2,8 +2,8 @@
 DIR_INPUT=${1:-./input}
 DIR_EXTRACT=./_extract
 DIR_PARSE=./_parse
-DIR_TOKENIZE=./_tokenize
-DIR_TOKEN=./_token
+DIR_TOKEN=./token
+DIR_TOKENFILE=./tokenline_num
 DIR_DETECT=./_detect
 DIR_DETECT2=./_detect2
 
@@ -14,20 +14,19 @@ echo "output directorY: ${DIR_OUTPUT}"
 
 rm -rf $DIR_EXTRACT 2> /dev/null
 rm -rf $DIR_PARSE 2> /dev/null
-rm -rf $DIR_TOKENIZE 2> /dev/null
+rm $DIR_TOKENFILE 2> /dev/null
 rm -rf $DIR_TOKEN 2> /dev/null
 rm -rf $DIR_DETECT 2> /dev/null
 rm -rf $DIR_DETECT2 2> /dev/null
 
 mkdir $DIR_EXTRACT
 mkdir $DIR_PARSE
-mkdir $DIR_TOKENIZE
 mkdir $DIR_TOKEN
 mkdir $DIR_DETECT
 mkdir $DIR_DETECT2
 
 # Compile
-chmod +x txl/*.x extract parser tokenize detect
+chmod +x txl/*.x extract parser tokenize detect co1
 
 pushd lexical
 make clean
@@ -35,14 +34,12 @@ make
 popd
 
 
-# parse functions
 ./extract ./txl java functions $DIR_INPUT $DIR_EXTRACT 8
 
-# parse
 ./parser $DIR_EXTRACT $DIR_PARSE 5
 
-# tokenize
-./tokenize "${DIR_PARSE}/function.file" $DIR_TOKEN $DIR_TOKENIZE 8
+./tokenize "${DIR_PARSE}/function.file" $DIR_TOKEN ./ 8
 
-# detect
 ./detect $DIR_TOKEN $DIR_DETECT "${DIR_PARSE}/function.file" 6 1 0.6
+
+./co1 $DIR_DETECT ./
